@@ -104,6 +104,28 @@ Prefer existing comparison tables, leaderboards, plots, dashboards, or result ca
 
 If persistent record creation is not allowed, produce a non-persistent reconstructed group report in the response and mark it as needing durable recording later. If metric direction, baseline, split identity, or failed/invalid run status cannot be established, output `escalate` or `blocked` instead of selecting a winner.
 
+## Next-Step Review Gate
+
+Before expanding trials, modifying code for the next experiment, promoting a baseline candidate, or spending material compute on a new direction, get a second opinion on the proposed next action.
+
+Use an extra agent or independent reviewer when available. If no separate agent is available, perform a distinct self-review pass and label it as self-review, not independent review.
+
+The reviewer checks only the next action, not the whole experiment history:
+
+- Preflight facts are still complete.
+- Leakage, split policy, and reproducibility risks do not block the action.
+- Metric gain is meaningful relative to variance, secondary regressions, and resource cost.
+- The proposed trial count and scope match the user's budget or project convention.
+- The action does not require unapproved tooling, data changes, broad refactoring, or automatic baseline promotion.
+
+Do not continue until the review verdict is `approve`, `revise`, or `escalate`.
+
+- `approve`: proceed with the next action as written.
+- `revise`: adjust the next action, budget, validation plan, or record before proceeding.
+- `escalate`: ask the user because a policy, budget, baseline, data, or risk decision is unresolved.
+
+This gate is not a new tracker or orchestrator. It is a lightweight review checkpoint for state-changing or resource-consuming next steps.
+
 ## Decision Contract
 
 Use these judgments after each trial group:

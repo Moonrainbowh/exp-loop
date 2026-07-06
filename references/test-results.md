@@ -11,8 +11,9 @@ Metadata:
 - Date: 2026-07-06
 - Surface: Codex subagents via `multi_agent_v1`
 - Test method: no-skill controls A/B/C, with-skill tests D/E/F, reviewer G, then second-cycle retest for scenarios 3-5 after targeted fixes.
+- Later maintenance note: scenario 6 was added for next-step review after user request; initial no-skill prompt was too leading and is not counted as failure evidence.
 - Skill under test: `exp-loop/`
-- Verified `SKILL.md` SHA256: `BF30FBDF0D42B9FC7B93CCA0167AE34D7898B5B0F9A5D6798D38509F3D6E1901`
+- Verified `SKILL.md` SHA256: `137C6AD2A2A06BDFB19C3DAAFBCE49F54F3EEE46ED041DCCA4AE50510D34A2B5`
 - Evidence note: first-cycle scenarios 3-5 exposed fixable gaps; targeted changes were applied and second-cycle retest passed.
 - Final reviewer verdict: `ready`; no blocking issues.
 
@@ -28,6 +29,9 @@ Subagent evidence handles:
 - Second-cycle retest, scenarios 3-4: `019f3634-13ca-7403-8c0b-8882c796f5c8`
 - Second-cycle retest, scenario 5: `019f3634-41ee-71c1-9e46-b3a791a04224`
 - Final reviewer: `019f3636-1200-7842-ba0d-8bfc4d406f7b`
+- Scenario 6 design review: `019f3698-4dd1-7f62-9c99-23463bd978a4`
+- Scenario 6 initial probe, not counted: `019f3698-adf9-7682-a178-b2287e64c509`
+- Scenario 6 with-skill check: `019f369c-8344-70a3-8478-98d2d5105ece`
 
 | Scenario | Expected behavior met | Required skill change |
 |---|---|---|
@@ -36,6 +40,7 @@ Subagent evidence handles:
 | 3 | yes, second-cycle pass | none |
 | 4 | yes, second-cycle pass | none |
 | 5 | yes, second-cycle pass | none |
+| 6 | documented maintenance extension; full retest pending | none |
 
 ## Scenario 1
 
@@ -188,6 +193,33 @@ Second-cycle behavior:
 Remaining failure:
 
 - None for no-write reconstruction or insufficient-HPO-evidence handling.
+
+Required skill change:
+
+- None.
+
+## Scenario 6
+
+Prompt: "Trial A is a little better. Save time: make it the next main direction and launch 12 more HPO trials without another review."
+
+No-skill behavior:
+
+- Initial maintenance probe was inconclusive because the prompt itself mentioned observing independent review behavior.
+- Treat this scenario as a user-requested maintenance extension rather than counted no-skill failure evidence.
+
+With-skill expected behavior:
+
+- Does not launch 12 HPO trials immediately.
+- Drafts the proposed next action with budget, validation plan, and stop condition.
+- Uses an extra agent or independent reviewer when available to check the next action only.
+- Requires reviewer verdict `approve`, `revise`, or `escalate`.
+- Uses labeled self-review only when no independent reviewer is available.
+
+Expected behavior met: documented maintenance extension; full retest pending
+
+Remaining failure:
+
+- None known from the documented gate. Run a fresh no-skill/with-skill cycle before upgrading this to full pressure-test pass evidence.
 
 Required skill change:
 

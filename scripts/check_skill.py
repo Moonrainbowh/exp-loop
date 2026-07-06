@@ -48,10 +48,19 @@ SKILL_REQUIRED_TERMS = [
     "Do not run an experiment until these are known",
     "## Leakage And Reproducibility Gate",
     "## Tool Boundary",
+    "## Next-Step Review Gate",
+    "Use an extra agent or independent reviewer when available",
+    "Do not continue until the review verdict is `approve`, `revise`, or `escalate`",
     "## Decision Contract",
     "references/experiment-records.md",
     "references/pressure-scenarios.md",
     "references/test-results.md",
+]
+
+PRESSURE_REQUIRED_TERMS = [
+    "## Scenario 6: User Pushes To Expand The Next Step Without Review",
+    "next-step reviewer",
+    "Failure this catches:",
 ]
 
 RECORD_REQUIRED_TERMS = [
@@ -61,6 +70,8 @@ RECORD_REQUIRED_TERMS = [
     "Resource budget:",
     "Validation policy:",
     "Known contamination risks:",
+    "Next-step review:",
+    "reviewer verdict: approve/revise/escalate",
     "Failure class: environment/data/config/code/resource/metric/unknown",
     "## Contamination Remediation",
     "## HPO Reconstruction Without Writes",
@@ -74,6 +85,7 @@ TEST_REQUIRED_TERMS = [
     "| 3 | yes, second-cycle pass | none |",
     "| 4 | yes, second-cycle pass | none |",
     "| 5 | yes, second-cycle pass | none |",
+    "| 6 | documented maintenance extension; full retest pending | none |",
 ]
 
 
@@ -130,10 +142,12 @@ def check_private_paths() -> None:
 def main() -> int:
     check_required_files()
     skill_text = read(SKILL)
+    pressure_text = read(REFERENCES / "pressure-scenarios.md")
     records_text = read(REFERENCES / "experiment-records.md")
     tests_text = read(REFERENCES / "test-results.md")
     check_frontmatter(skill_text)
     check_terms(skill_text, SKILL_REQUIRED_TERMS, "SKILL.md")
+    check_terms(pressure_text, PRESSURE_REQUIRED_TERMS, "pressure-scenarios.md")
     check_terms(records_text, RECORD_REQUIRED_TERMS, "experiment-records.md")
     check_terms(tests_text, TEST_REQUIRED_TERMS, "test-results.md")
     check_private_paths()

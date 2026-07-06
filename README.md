@@ -8,6 +8,7 @@
 - Leakage and reproducibility checks before trusting results.
 - Trial-group structure for ablation, HPO, and model-selection work.
 - Decision contract for `continue`, `pivot`, `abandon`, and `escalate`.
+- Next-step review gate before resource-consuming follow-up actions.
 - Reproducible experiment records with code, data, environment, resources, failed-trial status, and artifact manifest.
 
 ## Repository Layout

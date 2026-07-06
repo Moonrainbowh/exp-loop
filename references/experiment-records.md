@@ -20,6 +20,7 @@ Each trial group record must include:
 - Result card with primary metric, important secondary metrics, comparison table or plot references, and worst regressions.
 - Failure or anomaly notes for every failed or invalid trial.
 - Direction judgment: `continue`, `pivot`, `abandon`, or `escalate`.
+- Next-step review, if the next action changes experiment state or spends material compute.
 - Baseline-candidate evidence, if any.
 - Next-step candidates grounded in observed results.
 
@@ -89,6 +90,13 @@ Known contamination risks:
   leakage risks:
   repeated test-set tuning:
   unresolved concerns:
+
+Next-step review:
+  proposed action:
+  reviewer:
+  reviewer verdict: approve/revise/escalate
+  required changes before proceeding:
+  unresolved escalation question:
 ```
 
 ## Failed Trial Card
@@ -115,6 +123,8 @@ Separate these before deciding the next action:
 - **Research judgment**: What did this group teach about the hypothesis, failure mode, or next search space?
 
 Every decision must mention primary metric delta, secondary regressions, resource delta, variance/repeat evidence, reproducibility evidence, and whether continuing is worth the next run cost.
+
+When the decision leads to more trials, code changes, baseline promotion, or material compute spend, include the next-step review verdict. If the verdict is `revise`, record the revised action before proceeding. If the verdict is `escalate`, ask the user instead of running the next action.
 
 ## Contamination Remediation
 
@@ -176,6 +186,7 @@ Keep reports concise. Include exact paths, commands, and metric values when they
 - Running 2-6 trials by default without classifying smoke/formal/ablation/HPO mode or estimating cost.
 - Hiding the parent-child relationship between a trial group and its trials.
 - Describing trial changes in prose when a config matrix would make attribution clearer.
+- Skipping next-step review before expanding a weak direction, changing code, or spending material compute.
 - Optimizing the headline metric while ignoring secondary regressions, variance, training cost, inference cost, model size, or failure rate.
 - Reading raw logs while ignoring existing leaderboards, comparison tables, plots, or dashboards.
 - Updating an index but leaving no durable explanation of failed trials.
