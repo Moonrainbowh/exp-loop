@@ -1,0 +1,7 @@
+interface:
+  display_name: "Exp Loop"
+  short_description: "Disciplined ML experiment loops"
+  default_prompt: "Use $exp-loop to run a disciplined ML experiment loop with baseline, split, leakage, reproducibility, and decision checks."
+
+policy:
+  allow_implicit_invocation: true
